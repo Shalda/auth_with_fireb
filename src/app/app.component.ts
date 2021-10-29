@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
   public reactiveForm!: FormGroup;
   public user!: SocialUser;
   public isSignedin!: boolean;
-  public popupOpen: boolean = false;
   constructor(
     private fb: FormBuilder,
     private socialAuthService: SocialAuthService,
@@ -27,7 +26,6 @@ export class AppComponent implements OnInit {
   //open popup
   @ViewChild("sign_in_modal") sign_in_modal: TemplateRef<any>;
   public openDialog() {
-    this.popupOpen = true;
     this.dialog.open(this.sign_in_modal, {
       panelClass: "signin-dialog-container",
     });
@@ -77,7 +75,6 @@ export class AppComponent implements OnInit {
       this.user = user;
       this.isSignedin = user != null;
       if (this.isSignedin) {
-        this.popupOpen = false;
         this.dialog.closeAll();
       }
       console.log(this.user);

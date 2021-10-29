@@ -1,6 +1,6 @@
 <!--authorization="button_open_popup-panel_with_auth_options"-->
 <button
-        *ngIf="!popupOpen && !isSignedin"
+        *ngIf="!isSignedin"
         id="sign_in-button-holder"
         mat-button
         (click)="openDialog()"
@@ -33,7 +33,7 @@
         (click)="signIn('aws')"
         class="btn btn-social-icon btn-google mx-1"
       >
-        Signin with signInWithAmazon
+        Signin with Amazon
       </button>
       <button
         mat-button
@@ -45,7 +45,7 @@
       </button>
     </div>
     <div mat-dialog-actions>
-      <button class="modal_close"  mat-button mat-dialog-close (click)="popupOpen=false">Close</button>
+      <button class="modal_close"  mat-button mat-dialog-close>Close</button>
     </div>
   </div>
 </ng-template>
