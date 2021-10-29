@@ -46,13 +46,13 @@ import { MatFormFieldModule } from "@angular/material/form-field";
           {
             id: AmazonLoginProvider.PROVIDER_ID,
             provider: new AmazonLoginProvider(
-              "amzn1.application-oa2-client.f074ae67c0a146b6902cc0c4a3297935"
+              "amzn1.application-oa2-client.14f6efa3a928435a98656cb65f251b3c"
             ),
           },
           {
             id: MicrosoftLoginProvider.PROVIDER_ID,
             provider: new MicrosoftLoginProvider(
-              "0611ccc3-9521-45b6-b432-039852002705"
+              "86b9aa56-0aa9-444b-99e9-934cf43916b1"
             ),
           },
         ],

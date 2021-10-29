@@ -1,50 +1,47 @@
-<!--authorization="button_open_popup-panel_with_auth_options"-->
+<!--button_open_popup-panel_with_auth_options-->
 <button
-        *ngIf="!isSignedin"
-        id="sign_in-button-holder"
-        mat-button
-        (click)="openDialog()"
+  *ngIf="!isSignedin"
+  id="sign_in-button-holder"
+  mat-button
+  (click)="openDialog()"
 >
   Sign In
 </button>
-<!--authorization="template_for_popup-panel"-->
+<!--template_for_popup-panel-->
 <ng-template #sign_in_modal>
-<!--authorization="popup_with_auth_options"-->
-  <div  class="auth_container" >
-    <div
-      class="sign_in nav-box"
-      *ngIf="!isSignedin"
-    >
-<!--authorization="auth_title"-->
+  <!--popup_with_auth_options-->
+  <div class="auth_container">
+    <div class="sign_in nav-box" *ngIf="!isSignedin">
+      <!--auth_title-->
       <div class="sign_in title" mat-dialog-title>Sign In</div>
-<!--authorization="button_redirect_to_login_page_of_the_provider"-->
+      <!--button_redirect_to_login_page_of_the_provider-->
       <button
+        (click)="signIn('google')"
         mat-button
         type="button"
-        (click)="signIn('google')"
         class="btn btn-social-icon btn-google mx-1"
       >
         Signin with Google
       </button>
       <button
+        (click)="signIn('aws')"
         mat-button
         type="button"
-        (click)="signIn('aws')"
-        class="btn btn-social-icon btn-google mx-1"
+        class="btn btn-social-icon btn-aws mx-1"
       >
         Signin with Amazon
       </button>
       <button
+        (click)="signIn('mcr')"
         mat-button
         type="button"
-        (click)="signIn('mcr')"
-        class="btn btn-social-icon btn-google mx-1"
+        class="btn btn-social-icon btn-mcr mx-1"
       >
         Signin with Microsoft
       </button>
     </div>
     <div mat-dialog-actions>
-      <button class="modal_close"  mat-button mat-dialog-close>Close</button>
+      <button class="modal_close" mat-button mat-dialog-close>Close</button>
     </div>
   </div>
 </ng-template>
@@ -80,36 +77,26 @@
       readonly
     />
   </div>
-    <div class="form-group">
-        <label>Token</label>
-        <input
-                type="text"
-                [value]="user.authToken"
-                class="form-control"
-                id="authToken"
-                readonly
-        />
-    </div>
-    <div class="form-group">
-        <label>TokenID</label>
-        <input
-                type="text"
-                [value]="user.idToken"
-                class="form-control"
-                id="authTokenID"
-                readonly
-        />
-    </div>
-    <div class="form-group">
-        <label>Provider</label>
-        <input
-                type="text"
-                [value]="user.provider"
-                class="form-control"
-                id="provider"
-                readonly
-        />
-    </div>
+  <div class="form-group">
+    <label>Token</label>
+    <input
+      type="text"
+      [value]="user.response.id_token || user.response.idToken"
+      class="form-control"
+      id="authToken"
+      readonly
+    />
+  </div>
+  <div class="form-group">
+    <label>Provider</label>
+    <input
+      type="text"
+      [value]="user.provider"
+      class="form-control"
+      id="provider"
+      readonly
+    />
+  </div>
   <button type="button" (click)="logout()" class="btn btn-primary">
     Log Out
   </button>
