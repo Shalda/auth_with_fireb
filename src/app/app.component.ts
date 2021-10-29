@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
       password: ["", Validators.required],
     });
 
-    //checking that userInfo is received, closing popup
+    //check that userInfo is received, close popup
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.isSignedin = user != null;
