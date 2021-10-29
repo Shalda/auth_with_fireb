@@ -40,7 +40,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              "1061859259019-r3ctp1iplbsdapgtknocj8dvhhuncff1.apps.googleusercontent.com"
+              "1061859259019-d6qt4v45tlhjbjt4rid502g033hhcsn6.apps.googleusercontent.com"
             ),
           },
           {
