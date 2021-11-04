@@ -1,6 +1,6 @@
 <!--button_open_popup-panel_with_auth_options-->
 <button
-  *ngIf="!isSignedin"
+  *ngIf="!user"
   id="sign_in-button-holder"
   mat-button
   (click)="openDialog()"
@@ -11,7 +11,7 @@
 <ng-template #sign_in_modal>
   <!--popup_with_auth_options-->
   <div class="auth_container">
-    <div class="sign_in nav-box" *ngIf="!isSignedin">
+    <div class="sign_in nav-box" *ngIf="!user">
       <!--auth_title-->
       <div class="sign_in title" mat-dialog-title>Sign In</div>
       <!--button_redirect_to_login_page_of_the_provider-->
@@ -46,57 +46,10 @@
   </div>
 </ng-template>
 <!--User_info_received_from_provider-->
-<div *ngIf="isSignedin === true" class="mt-4">
-  <div class="form-group">
-    <label>First Name</label>
-    <input
-      type="text"
-      [value]="user.firstName"
-      class="form-control"
-      id="firstname"
-      readonly
-    />
-  </div>
-  <div class="form-group">
-    <label>Last Name</label>
-    <input
-      type="text"
-      [value]="user.lastName"
-      class="form-control"
-      id="lastname"
-      readonly
-    />
-  </div>
-  <div class="form-group">
-    <label>Email</label>
-    <input
-      type="text"
-      [value]="user.email"
-      class="form-control"
-      id="email"
-      readonly
-    />
-  </div>
-  <div class="form-group">
-    <label>Token</label>
-    <input
-      type="text"
-      [value]="user.response.id_token || user.response.idToken"
-      class="form-control"
-      id="authToken"
-      readonly
-    />
-  </div>
-  <div class="form-group">
-    <label>Provider</label>
-    <input
-      type="text"
-      [value]="user.provider"
-      class="form-control"
-      id="provider"
-      readonly
-    />
-  </div>
+<div *ngIf="user" class="mt-4">
+  <h3> Welcome {{user.displayName}}</h3>
+ <p>token: {{user['_delegate'].accessToken}}</p>
+ <p>Refresh token: {{user['_delegate'].stsTokenManager.accessToken}}</p>
   <button type="button" (click)="logout()" class="btn btn-primary">
     Log Out
   </button>

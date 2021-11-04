@@ -19,3 +19,8 @@
   margin: 0.2rem;
   width: 80vw;
 }
+p{
+  margin: 10px auto;
+  width: 80vw;
+  overflow-wrap: anywhere;
+}

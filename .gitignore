@@ -48,3 +48,8 @@ Thumbs.db
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

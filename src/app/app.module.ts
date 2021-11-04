@@ -2,64 +2,40 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
 import { AppComponent } from "./app.component";
-import { HelloComponent } from "./hello.component";
-
-import { ReactiveFormsModule } from "@angular/forms";
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-  GoogleLoginProvider,
-  AmazonLoginProvider,
-  MicrosoftLoginProvider,
-} from "angularx-social-login";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyDBxWWupnR7AghW90xLVKdUFXAQ_YoQ9uI",
+  authDomain: "fbauth-853b0.firebaseapp.com",
+  databaseURL: "https://fbauth-853b0-default-rtdb.firebaseio.com",
+  projectId: "fbauth-853b0",
+  storageBucket: "fbauth-853b0.appspot.com",
+  messagingSenderId: "636570909554",
+  appId: "1:636570909554:web:4bc1a5c01c9d40b59ffbeb",
+  measurementId: "G-0WK2PH0LZF",
+};
 @NgModule({
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
-    SocialLoginModule,
     MatDialogModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     BrowserAnimationsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    AngularFireAuthModule,
   ],
-  providers: [
-    {
-      provide: "SocialAuthServiceConfig",
-      useValue: {
-        autoLogin: true,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              "1061859259019-d6qt4v45tlhjbjt4rid502g033hhcsn6.apps.googleusercontent.com"
-            ),
-          },
-          {
-            id: AmazonLoginProvider.PROVIDER_ID,
-            provider: new AmazonLoginProvider(
-              "amzn1.application-oa2-client.14f6efa3a928435a98656cb65f251b3c"
-            ),
-          },
-          {
-            id: MicrosoftLoginProvider.PROVIDER_ID,
-            provider: new MicrosoftLoginProvider(
-              "86b9aa56-0aa9-444b-99e9-934cf43916b1"
-            ),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
-  ],
-  declarations: [AppComponent, HelloComponent],
+  providers: [],
+  declarations: [AppComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

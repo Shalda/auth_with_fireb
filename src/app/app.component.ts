@@ -1,13 +1,11 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  AmazonLoginProvider,
-  GoogleLoginProvider,
-  MicrosoftLoginProvider,
-  SocialAuthService,
-  SocialUser,
-} from "angularx-social-login";
 import { MatDialog } from "@angular/material/dialog";
+
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import firebase from "firebase/compat/app";
+import AuthProvider = firebase.auth.AuthProvider;
+import UserCredential = firebase.auth.UserCredential;
+import User = firebase.User;
 
 @Component({
   selector: "my-app",
@@ -15,14 +13,8 @@ import { MatDialog } from "@angular/material/dialog";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-  public reactiveForm!: FormGroup;
-  public user!: SocialUser;
-  public isSignedin!: boolean;
-  constructor(
-    private fb: FormBuilder,
-    private socialAuthService: SocialAuthService,
-    public dialog: MatDialog
-  ) {}
+  public user: User | null;
+  constructor(public dialog: MatDialog, public afAuth: AngularFireAuth) {}
   //open popup
   @ViewChild("sign_in_modal") sign_in_modal: TemplateRef<any>;
   public openDialog() {
@@ -30,54 +22,44 @@ export class AppComponent implements OnInit {
       panelClass: "signin-dialog-container",
     });
   }
+
   //check provider name and start login
   public signIn(provider: string) {
+    let authProvider: AuthProvider;
     switch (provider) {
       case "google":
-        this._signInToProvider(GoogleLoginProvider.PROVIDER_ID);
+        authProvider = new firebase.auth.GoogleAuthProvider();
+        this._signInToProvider(authProvider);
         break;
       case "aws":
-        this._signInToProvider(AmazonLoginProvider.PROVIDER_ID);
+        this._signInToProvider(authProvider);
         break;
       case "mcr":
-        this._signInToProvider(MicrosoftLoginProvider.PROVIDER_ID);
+        authProvider = new firebase.auth.OAuthProvider("microsoft.com");
+        this._signInToProvider(authProvider);
         break;
       default:
         return;
     }
   }
-  private _signInToProvider(providerId: string) {
-    this.socialAuthService
-      .signIn(providerId)
-      .then((data) => this.successSignIn(data))
+  private _signInToProvider(providerId: AuthProvider) {
+    this.afAuth
+      .signInWithPopup(providerId)
+      .then((userInfo: UserCredential) => {
+        console.log(userInfo);
+      })
       .catch((error) => console.log(error));
   }
-  //set provider to localstorage
-  public successSignIn(response) {
-    if (response.authToken) {
-      localStorage.setItem("provider", response.provider);
-    }
+  logout() {
+    this.afAuth.signOut().catch((error) => console.log(error));
   }
-
-  public logout(): void {
-    this.socialAuthService.signOut();
-    localStorage.removeItem("provider");
-  }
-
   ngOnInit() {
-    this.reactiveForm = this.fb.group({
-      email: ["", Validators.required],
-      password: ["", Validators.required],
-    });
-
     //check that userInfo is received, close popup
-    this.socialAuthService.authState.subscribe((user) => {
+    this.afAuth.user.subscribe((user: User | null) => {
       this.user = user;
-      this.isSignedin = user != null;
-      if (this.isSignedin) {
+      if (user) {
         this.dialog.closeAll();
       }
-      console.log(this.user);
     });
   }
 }
